@@ -1,0 +1,23 @@
+{
+  "name": "binary-tree-visualizer",
+  "version": "1.0.0",
+  "description": "Initial attempt at creating a data-structure visualizer using TypeScript, HTML, and CSS. The first step is to create an array visualizer that allows the following:",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kjameer0/binary-tree-visualizer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kjameer0/binary-tree-visualizer/issues"
+  },
+  "homepage": "https://github.com/kjameer0/binary-tree-visualizer#readme",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}
