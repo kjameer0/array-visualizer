@@ -18,6 +18,14 @@
   },
   "homepage": "https://github.com/kjameer0/binary-tree-visualizer#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.32.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.32.1",
     "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "prettier": "^2.8.3"
   }
 }
