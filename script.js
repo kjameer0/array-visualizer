@@ -2,6 +2,31 @@
 function $(id) {
     return document.getElementById(id);
 }
+const lo = (s) => console.log(s);
+function produceErrorMessage(err) {
+    let message = 'Unknown Error';
+    if (err instanceof Error) {
+        message = err.message;
+    }
+    reportError({ message });
+}
+function makeClearButton() {
+    try {
+        const buttonClear = $('make-empty');
+        const inputElement = $('array-input');
+        const arr = $('array-list');
+        if (!(buttonClear && inputElement && arr)) {
+            throw new Error('missing element in clearButton');
+        }
+        buttonClear === null || buttonClear === void 0 ? void 0 : buttonClear.addEventListener('click', () => {
+            inputElement.value = '';
+            arr.innerHTML = '';
+        });
+    }
+    catch (errorId) {
+        produceErrorMessage(errorId);
+    }
+}
 const stringToArray = (str) => {
     let start = 0;
     let end = str.length;
@@ -43,11 +68,8 @@ function makeArrayButton(butId, inputId, outputId) {
         });
     }
     catch (errorId) {
-        let message = 'Unknown Error';
-        if (errorId instanceof Error) {
-            message = errorId.message;
-        }
-        reportError({ message });
+        produceErrorMessage(errorId);
     }
 }
 makeArrayButton('submit-arr', 'array-input', 'array-list');
+makeClearButton();
