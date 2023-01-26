@@ -1,0 +1,21 @@
+* {
+  background-color: black;
+  color: #9e1b4d;
+  font-weight: 1000;
+  /* border: 1px solid white; */
+}
+p {
+  border: 2px solid;
+  border-radius: 100%;
+  padding: 1rem 1.3rem;
+  margin-top: 0.1rem;
+}
+ul {
+  list-style: none;
+}
+li {
+  text-align: center;
+  font-size: 1.4rem;
+  float: left;
+  margin: 1% 3%;
+}
