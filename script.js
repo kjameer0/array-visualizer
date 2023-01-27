@@ -206,6 +206,32 @@ function popArray() {
         produceErrorMessage(error);
     }
 }
+function shiftArray() {
+    try {
+        const button = $('shift-arr');
+        const arrList = $('array-list');
+        if (!(button && arrList))
+            throw new Error(`missing element in push function`);
+        button.addEventListener('click', () => {
+            var _a;
+            const firstArrElem = arrList.firstChild;
+            if (firstArrElem === null)
+                throw new Error('no existing arr');
+            firstArrElem.remove();
+            const oldArr = arrList.children;
+            if (!oldArr)
+                throw new Error('no old array');
+            for (const node of oldArr) {
+                if (node == null || node.firstChild == null)
+                    break;
+                node.firstChild.textContent = String(Number((_a = node.firstChild) === null || _a === void 0 ? void 0 : _a.textContent) - 1);
+            }
+        });
+    }
+    catch (error) {
+        produceErrorMessage(error);
+    }
+}
 makeArrayButton('submit-arr', 'array-input', 'array-list');
 makeClearButton();
 makeRandomButton();
@@ -213,6 +239,7 @@ makeConcatButton();
 pushToArrayList();
 unShiftToArrayList();
 popArray();
+shiftArray(0);
 /*
 push
   input field to take element to add to array
