@@ -170,6 +170,8 @@ function unShiftToArrayList() {
             const firstArrElem = arrList.firstChild;
             if (firstArrElem === null)
                 throw new Error('no existing arr');
+            if (inputElement.value === '')
+                throw new Error('no unshift val');
             const newVal = strArrayToLiElements([inputElement.value], 0)[0];
             const oldArr = arrList.children;
             if (!oldArr)
@@ -187,12 +189,30 @@ function unShiftToArrayList() {
         produceErrorMessage(error);
     }
 }
+function popArray() {
+    try {
+        const button = $('pop-arr');
+        if (button === null)
+            throw new Error('no button pop');
+        button.addEventListener('click', () => {
+            var _a;
+            const arr = $('array-list');
+            if (arr === null || arr.childElementCount === 0)
+                throw new Error('no array');
+            (_a = arr.lastChild) === null || _a === void 0 ? void 0 : _a.remove();
+        });
+    }
+    catch (error) {
+        produceErrorMessage(error);
+    }
+}
 makeArrayButton('submit-arr', 'array-input', 'array-list');
 makeClearButton();
 makeRandomButton();
 makeConcatButton();
 pushToArrayList();
 unShiftToArrayList();
+popArray();
 /*
 push
   input field to take element to add to array
