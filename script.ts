@@ -1,7 +1,8 @@
+import { lot } from './utilities/utils.mjs';
 function $(id: string) {
   return document.getElementById(id);
 }
-const lo = (s: unknown) => console.log(s);
+console.log(lot(1, 2));
 //create array of random numbers
 function generateRandomArray(len: number) {
   const res = Array(len);
@@ -215,12 +216,4 @@ makeConcatButton();
 pushToArrayList();
 unShiftToArrayList();
 popArray();
-shiftArray(0);
-/*
-push
-  input field to take element to add to array
-  button to submit value
-  create li element with idx
-  append to array-list
- //pop //unshift //shift
-*/
+shiftArray();

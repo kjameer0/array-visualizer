@@ -1,8 +1,8 @@
-"use strict";
+import { lot } from './utilities/utils.mjs';
 function $(id) {
     return document.getElementById(id);
 }
-const lo = (s) => console.log(s);
+console.log(lot(1, 2));
 //create array of random numbers
 function generateRandomArray(len) {
     const res = Array(len);
@@ -27,7 +27,7 @@ function makeClearButton() {
         if (!(buttonClear && inputElement && arr)) {
             throw new Error('missing element in clearButton');
         }
-        buttonClear === null || buttonClear === void 0 ? void 0 : buttonClear.addEventListener('click', () => {
+        buttonClear?.addEventListener('click', () => {
             inputElement.value = '';
             arr.innerHTML = '';
         });
@@ -97,7 +97,7 @@ function makeArrayButton(butId, inputId, outputId) {
             if (inputElement.value.length === 0)
                 throw new Error('no input value');
             outputElement.textContent = '';
-            const textArr = stringToArray(inputElement === null || inputElement === void 0 ? void 0 : inputElement.value);
+            const textArr = stringToArray(inputElement?.value);
             const elementArray = strArrayToLiElements(textArr, 0);
             elementArray.forEach((arrEl) => {
                 outputElement.appendChild(arrEl);
@@ -120,13 +120,12 @@ function makeConcatButton() {
         if (outputElement === null)
             throw new Error('no output element concat');
         button.addEventListener('click', () => {
-            var _a, _b;
-            const lastArrElem = (_b = (_a = outputElement.lastChild) === null || _a === void 0 ? void 0 : _a.firstChild) === null || _b === void 0 ? void 0 : _b.textContent;
+            const lastArrElem = outputElement.lastChild?.firstChild?.textContent;
             if (outputElement.childElementCount === 0)
                 throw new Error('no array in concat');
             if (lastArrElem === null)
                 throw new Error('no existing arr');
-            const textArr = stringToArray(inputElement === null || inputElement === void 0 ? void 0 : inputElement.value);
+            const textArr = stringToArray(inputElement?.value);
             if (inputElement.value === '')
                 throw new Error('no value to concat');
             const elementArray = strArrayToLiElements(textArr, Number(lastArrElem) + 1);
@@ -147,10 +146,9 @@ function pushToArrayList() {
     if (!(button && inputElement && arrList))
         throw new Error(`missing element in push function`);
     button.addEventListener('click', () => {
-        var _a, _b;
         if (arrList.childElementCount === 0)
             throw new Error('no array');
-        const lastArrElem = (_b = (_a = arrList.lastChild) === null || _a === void 0 ? void 0 : _a.firstChild) === null || _b === void 0 ? void 0 : _b.textContent;
+        const lastArrElem = arrList.lastChild?.firstChild?.textContent;
         if (lastArrElem === null)
             throw new Error('no existing arr');
         const newVal = strArrayToLiElements([inputElement.value], Number(lastArrElem) + 1)[0];
@@ -166,7 +164,6 @@ function unShiftToArrayList() {
         if (!(button && inputElement && arrList))
             throw new Error(`missing element in push function`);
         button.addEventListener('click', () => {
-            var _a;
             const firstArrElem = arrList.firstChild;
             if (firstArrElem === null)
                 throw new Error('no existing arr');
@@ -179,7 +176,7 @@ function unShiftToArrayList() {
             for (const node of oldArr) {
                 if (node == null || node.firstChild == null)
                     break;
-                node.firstChild.textContent = String(Number((_a = node.firstChild) === null || _a === void 0 ? void 0 : _a.textContent) + 1);
+                node.firstChild.textContent = String(Number(node.firstChild?.textContent) + 1);
             }
             arrList.insertBefore(newVal, firstArrElem);
             inputElement.value = '';
@@ -195,11 +192,10 @@ function popArray() {
         if (button === null)
             throw new Error('no button pop');
         button.addEventListener('click', () => {
-            var _a;
             const arr = $('array-list');
             if (arr === null || arr.childElementCount === 0)
                 throw new Error('no array');
-            (_a = arr.lastChild) === null || _a === void 0 ? void 0 : _a.remove();
+            arr.lastChild?.remove();
         });
     }
     catch (error) {
@@ -213,7 +209,6 @@ function shiftArray() {
         if (!(button && arrList))
             throw new Error(`missing element in push function`);
         button.addEventListener('click', () => {
-            var _a;
             const firstArrElem = arrList.firstChild;
             if (firstArrElem === null)
                 throw new Error('no existing arr');
@@ -224,7 +219,7 @@ function shiftArray() {
             for (const node of oldArr) {
                 if (node == null || node.firstChild == null)
                     break;
-                node.firstChild.textContent = String(Number((_a = node.firstChild) === null || _a === void 0 ? void 0 : _a.textContent) - 1);
+                node.firstChild.textContent = String(Number(node.firstChild?.textContent) - 1);
             }
         });
     }
@@ -239,12 +234,4 @@ makeConcatButton();
 pushToArrayList();
 unShiftToArrayList();
 popArray();
-shiftArray(0);
-/*
-push
-  input field to take element to add to array
-  button to submit value
-  create li element with idx
-  append to array-list
- //pop //unshift //shift
-*/
+shiftArray();
