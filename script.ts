@@ -1,23 +1,6 @@
-import { lot } from './utilities/utils.mjs';
-function $(id: string) {
-  return document.getElementById(id);
-}
-console.log(lot(1, 2));
-//create array of random numbers
-function generateRandomArray(len: number) {
-  const res = Array(len);
-  for (let i = 0; i < len; i++) {
-    res[i] = String(Math.floor(Math.random() * 2 * len + 1));
-  }
-  return res;
-}
-function produceErrorMessage(err: unknown) {
-  let message = 'Unknown Error';
-  if (err instanceof Error) {
-    message = err.message;
-  }
-  reportError({ message });
-}
+import { $ } from './utilities/utils.mjs';
+import { generateRandomArray } from './utilities/utils.mjs';
+import { produceErrorMessage } from './utilities/utils.mjs';
 //clear button clears text inputs and array display
 function makeClearButton() {
   try {
@@ -209,6 +192,47 @@ function shiftArray() {
     produceErrorMessage(error);
   }
 }
+function dragElement(elmnt: string) {
+  let changeInX = 0,
+    changeInY = 0,
+    xPos = 0,
+    yPos = 0;
+  const dragger = document.getElementById(elmnt);
+  if (!dragger) throw new Error('no elem');
+  dragger.addEventListener('mousedown', dragMouseDown);
+
+  function dragMouseDown(e: MouseEvent) {
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    xPos = e.clientX;
+    yPos = e.clientY;
+    //mouseup event to stop dragging when mouse is released
+    document.addEventListener('mouseup', closeDragElement);
+    // call a function whenever the cursor moves:
+    document.addEventListener('mousemove', elementDrag);
+  }
+
+  function elementDrag(e: MouseEvent) {
+    const dragger = document.getElementById(elmnt);
+    if (!dragger) throw new Error('no elem');
+    e.preventDefault();
+    // calculate the new cursor position:
+    changeInX = xPos - e.clientX;
+    changeInY = yPos - e.clientY;
+    xPos = e.clientX;
+    yPos = e.clientY;
+    // set the element's new position:
+    dragger.style.top = dragger.offsetTop - changeInY + 'px';
+    dragger.style.left = dragger.offsetLeft - changeInX + 'px';
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.removeEventListener('mouseup', closeDragElement);
+    document.removeEventListener('mousemove', elementDrag);
+  }
+}
+
 makeArrayButton('submit-arr', 'array-input', 'array-list');
 makeClearButton();
 makeRandomButton();
@@ -217,3 +241,4 @@ pushToArrayList();
 unShiftToArrayList();
 popArray();
 shiftArray();
+dragElement('drag-test');
