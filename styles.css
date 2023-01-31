@@ -21,6 +21,10 @@ li {
   float: left;
   margin: 1% 3%;
 }
+#test {
+  position: relative;
+  border: 1px solid white;
+}
 #drag-test {
   position: absolute;
 }

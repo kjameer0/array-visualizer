@@ -192,6 +192,42 @@ function shiftArray() {
     produceErrorMessage(error);
   }
 }
+function canDrop(event: Event) {
+  event.preventDefault();
+}
+function drag(event: DragEvent) {
+  try {
+    const arrayVal = (<HTMLElement>event.target).lastChild?.textContent;
+    if (!event.dataTransfer || !event.target)
+      throw new Error('no event to check');
+    if (!arrayVal) throw new Error('no array value');
+    event.dataTransfer.setData('text', arrayVal);
+  } catch (error) {
+    produceErrorMessage(error);
+  }
+}
+function drop(event: DragEvent) {
+  try {
+    event.preventDefault();
+    const data = event.dataTransfer?.getData('text');
+    const swap = (<HTMLElement>event.target).lastChild;
+    if (!data) throw new Error('no data found in list elem');
+    if (!swap) throw new Error('no data to swap');
+    swap.textContent = data;
+  } catch (error) {
+    produceErrorMessage(error);
+  }
+}
+
+makeArrayButton('submit-arr', 'array-input', 'array-list');
+makeClearButton();
+makeRandomButton();
+makeConcatButton();
+pushToArrayList();
+unShiftToArrayList();
+popArray();
+shiftArray();
+dragElement('drag-test');
 function dragElement(elmnt: string) {
   let changeInX = 0,
     changeInY = 0,
@@ -213,7 +249,7 @@ function dragElement(elmnt: string) {
   }
 
   function elementDrag(e: MouseEvent) {
-    const dragger = document.getElementById(elmnt);
+    const dragger = $(elmnt);
     if (!dragger) throw new Error('no elem');
     e.preventDefault();
     // calculate the new cursor position:
@@ -224,6 +260,10 @@ function dragElement(elmnt: string) {
     // set the element's new position:
     dragger.style.top = dragger.offsetTop - changeInY + 'px';
     dragger.style.left = dragger.offsetLeft - changeInX + 'px';
+    dragger.textContent = `cliTop: ${
+      dragger.getBoundingClientRect().top
+    } cliLeft: ${dragger.getBoundingClientRect().left}
+     offTop: ${dragger.offsetTop} offLEft: ${dragger.offsetLeft}`;
   }
 
   function closeDragElement() {
@@ -232,13 +272,3 @@ function dragElement(elmnt: string) {
     document.removeEventListener('mousemove', elementDrag);
   }
 }
-
-makeArrayButton('submit-arr', 'array-input', 'array-list');
-makeClearButton();
-makeRandomButton();
-makeConcatButton();
-pushToArrayList();
-unShiftToArrayList();
-popArray();
-shiftArray();
-dragElement('drag-test');

@@ -210,6 +210,46 @@ function shiftArray() {
         produceErrorMessage(error);
     }
 }
+function canDrop(event) {
+    event.preventDefault();
+}
+function drag(event) {
+    try {
+        const arrayVal = event.target.lastChild?.textContent;
+        if (!event.dataTransfer || !event.target)
+            throw new Error('no event to check');
+        if (!arrayVal)
+            throw new Error('no array value');
+        event.dataTransfer.setData('text', arrayVal);
+    }
+    catch (error) {
+        produceErrorMessage(error);
+    }
+}
+function drop(event) {
+    try {
+        event.preventDefault();
+        const data = event.dataTransfer?.getData('text');
+        const swap = event.target.lastChild;
+        if (!data)
+            throw new Error('no data found in list elem');
+        if (!swap)
+            throw new Error('no data to swap');
+        swap.textContent = data;
+    }
+    catch (error) {
+        produceErrorMessage(error);
+    }
+}
+makeArrayButton('submit-arr', 'array-input', 'array-list');
+makeClearButton();
+makeRandomButton();
+makeConcatButton();
+pushToArrayList();
+unShiftToArrayList();
+popArray();
+shiftArray();
+dragElement('drag-test');
 function dragElement(elmnt) {
     let changeInX = 0, changeInY = 0, xPos = 0, yPos = 0;
     const dragger = document.getElementById(elmnt);
@@ -227,7 +267,7 @@ function dragElement(elmnt) {
         document.addEventListener('mousemove', elementDrag);
     }
     function elementDrag(e) {
-        const dragger = document.getElementById(elmnt);
+        const dragger = $(elmnt);
         if (!dragger)
             throw new Error('no elem');
         e.preventDefault();
@@ -239,6 +279,8 @@ function dragElement(elmnt) {
         // set the element's new position:
         dragger.style.top = dragger.offsetTop - changeInY + 'px';
         dragger.style.left = dragger.offsetLeft - changeInX + 'px';
+        dragger.textContent = `cliTop: ${dragger.getBoundingClientRect().top} cliLeft: ${dragger.getBoundingClientRect().left}
+     offTop: ${dragger.offsetTop} offLEft: ${dragger.offsetLeft}`;
     }
     function closeDragElement() {
         /* stop moving when mouse button is released:*/
@@ -246,12 +288,3 @@ function dragElement(elmnt) {
         document.removeEventListener('mousemove', elementDrag);
     }
 }
-makeArrayButton('submit-arr', 'array-input', 'array-list');
-makeClearButton();
-makeRandomButton();
-makeConcatButton();
-pushToArrayList();
-unShiftToArrayList();
-popArray();
-shiftArray();
-dragElement('drag-test');
