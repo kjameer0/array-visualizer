@@ -1,4 +1,4 @@
-import { $, generateRandomArray, produceErrorMessage, } from './utilities/utils.mjs';
+import { $, generateRandomArray, produceErrorMessage, inputKeyHandle, } from './utilities/utils.mjs';
 //clear button clears text inputs and array display
 function makeClearButton() {
     try {
@@ -64,6 +64,7 @@ function makeRandomButton() {
                 arrList.appendChild(arrEl);
             });
         });
+        inputElement.addEventListener('keydown', (e) => inputKeyHandle(e, buttonRandom));
     }
     catch (error) {
         produceErrorMessage(error);
@@ -90,6 +91,7 @@ function makeArrayButton(butId, inputId, outputId) {
                 outputElement.appendChild(arrEl);
             });
         });
+        inputElement.addEventListener('keydown', (e) => inputKeyHandle(e, button));
     }
     catch (errorId) {
         produceErrorMessage(errorId);
@@ -121,32 +123,41 @@ function makeConcatButton() {
             });
             inputElement.value = '';
         });
+        inputElement.addEventListener('keydown', (e) => inputKeyHandle(e, button));
     }
     catch (errorId) {
         produceErrorMessage(errorId);
     }
 }
 function pushToArrayList() {
-    const button = $('push-arr');
-    const inputElement = $('push-input');
-    const arrList = $('array-list');
-    if (!(button && inputElement && arrList))
-        throw new Error(`missing element in push function`);
-    button.addEventListener('click', () => {
-        if (arrList.childElementCount === 0)
-            throw new Error('no array');
-        const lastArrElem = arrList.lastChild?.firstChild?.textContent;
-        if (lastArrElem === null)
-            throw new Error('no existing arr');
-        const newVal = strArrayToLiElements([inputElement.value], Number(lastArrElem) + 1)[0];
-        arrList.appendChild(newVal);
-        inputElement.value = '';
-    });
+    try {
+        const button = $('push-arr');
+        const inputElement = $('push-input');
+        const arrList = $('array-list');
+        if (!(button && inputElement && arrList))
+            throw new Error(`missing element in push function`);
+        button.addEventListener('click', () => {
+            if (arrList.childElementCount === 0)
+                throw new Error('no array');
+            const lastArrElem = arrList.lastChild?.firstChild?.textContent;
+            if (lastArrElem === null)
+                throw new Error('no existing arr');
+            if (!inputElement.value.length)
+                throw new Error('no value to push');
+            const newVal = strArrayToLiElements([inputElement.value], Number(lastArrElem) + 1)[0];
+            arrList.appendChild(newVal);
+            inputElement.value = '';
+        });
+        inputElement.addEventListener('keydown', (e) => inputKeyHandle(e, button));
+    }
+    catch (error) {
+        produceErrorMessage(error);
+    }
 }
 function unShiftToArrayList() {
     try {
         const button = $('unshift-arr');
-        const inputElement = $('push-input');
+        const inputElement = $('unshift-input');
         const arrList = $('array-list');
         if (!(button && inputElement && arrList))
             throw new Error(`missing element in push function`);
@@ -168,6 +179,7 @@ function unShiftToArrayList() {
             arrList.insertBefore(newVal, firstArrElem);
             inputElement.value = '';
         });
+        inputElement.addEventListener('keydown', (e) => inputKeyHandle(e, button));
     }
     catch (error) {
         produceErrorMessage(error);
@@ -220,7 +232,6 @@ function canDrop(event) {
 function drag(event) {
     try {
         const arrayElem = event.target.id;
-        console.log(arrayElem);
         if (!event.dataTransfer || !event.target)
             throw new Error('no event to check');
         if (!arrayElem)

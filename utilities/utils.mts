@@ -18,4 +18,8 @@ export function produceErrorMessage(err: unknown) {
   }
   reportError({ message });
 }
-/* */
+export function inputKeyHandle(e: KeyboardEvent, button: HTMLElement) {
+  if (e.key === 'Enter') {
+    button.click();
+  }
+}
