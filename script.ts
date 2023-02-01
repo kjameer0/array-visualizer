@@ -34,7 +34,7 @@ function strArrayToLiElements(arr: string[], existingLen: number) {
     const listElement = document.createElement('li');
     listElement.id = 'el-' + idx;
     const arrayElementTag = document.createElement('p');
-    arrayElementTag.id = 'val-' + elem;
+    arrayElementTag.id = 'val-' + idx;
     arrayElementTag.draggable = true;
     arrayElementTag.addEventListener('drop', drop);
     arrayElementTag.addEventListener('dragover', canDrop);
@@ -206,6 +206,7 @@ function canDrop(event: Event) {
 function drag(event: DragEvent) {
   try {
     const arrayElem = (<HTMLElement>event.target).id;
+    console.log(arrayElem);
     if (!event.dataTransfer || !event.target)
       throw new Error('no event to check');
     if (!arrayElem) throw new Error('no array value');
@@ -239,48 +240,3 @@ pushToArrayList();
 unShiftToArrayList();
 popArray();
 shiftArray();
-dragElement('drag-test');
-function dragElement(elmnt: string) {
-  let changeInX = 0,
-    changeInY = 0,
-    xPos = 0,
-    yPos = 0;
-  const dragger = document.getElementById(elmnt);
-  if (!dragger) throw new Error('no elem');
-  dragger.addEventListener('mousedown', dragMouseDown);
-
-  function dragMouseDown(e: MouseEvent) {
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    xPos = e.clientX;
-    yPos = e.clientY;
-    //mouseup event to stop dragging when mouse is released
-    document.addEventListener('mouseup', closeDragElement);
-    // call a function whenever the cursor moves:
-    document.addEventListener('mousemove', elementDrag);
-  }
-
-  function elementDrag(e: MouseEvent) {
-    const dragger = $(elmnt);
-    if (!dragger) throw new Error('no elem');
-    e.preventDefault();
-    // calculate the new cursor position:
-    changeInX = xPos - e.clientX;
-    changeInY = yPos - e.clientY;
-    xPos = e.clientX;
-    yPos = e.clientY;
-    // set the element's new position:
-    dragger.style.top = dragger.offsetTop - changeInY + 'px';
-    dragger.style.left = dragger.offsetLeft - changeInX + 'px';
-    dragger.textContent = `cliTop: ${
-      dragger.getBoundingClientRect().top
-    } cliLeft: ${dragger.getBoundingClientRect().left}
-     offTop: ${dragger.offsetTop} offLEft: ${dragger.offsetLeft}`;
-  }
-
-  function closeDragElement() {
-    /* stop moving when mouse button is released:*/
-    document.removeEventListener('mouseup', closeDragElement);
-    document.removeEventListener('mousemove', elementDrag);
-  }
-}

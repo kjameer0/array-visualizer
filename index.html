@@ -9,30 +9,26 @@
 </head>
 <body>
   <h1>Array Visualizer</h1>
-  <label for="array-input">Put your array here</label>
+  <label for="array-input">Put your comma separated array here:</label>
   <input type="text" name="array-input" id="array-input">
   <button type="submit" id="submit-arr">Make Array</button>
-  <button type="submit" id="make-empty">Clear Array</button>
   <br>
   <label for="arr-maker" name="arr-maker">Make random array of length:</label>
   <input type="text" id ="submit-len" name="submit-len">
   <button type="submit" id="make-random">Make Random Array</button>
   <br>
-  <label for="concat-maker" name="concat-maker">concat array:</label>
+  <label for="concat-maker" name="concat-maker">Concat array to existing array:</label>
   <input type="text" id ="concat-maker" name="concat-maker">
-  <button type="submit" id="concat-arr">Concat</button>
+  <button class ="button-small" type="submit" id="concat-arr">Concat</button>
   <br>
   <label for="push-input" name="push-input">Value to push or unshift:</label>
   <input type="text" id ="push-input" name="push-input">
-  <button type="submit" id="push-arr">Push</button>
-  <button type="submit" id="unshift-arr">Unshift</button>
+  <button class ="button-small"type="submit" id="push-arr">Push</button>
+  <button class ="button-small"type="submit" id="unshift-arr">Unshift</button>
   <br>
-  <button type="submit" id="pop-arr">Pop</button>
-  <button type="submit" id="shift-arr">Shift</button>
-  <div>
-    <div id ='drag-test'>try dragging</div>
-
-  </div>
+  <button class ="button-small"type="submit" id="pop-arr">Pop</button>
+  <button class ="button-small"type="submit" id="shift-arr">Shift</button>
+  <button class ="button-med"type="submit" id="make-empty">Clear All</button>
   <div id="array-container"></div>
   <h2><strong>Array</strong></h2>
   <ul id="array-list"></ul>
