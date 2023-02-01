@@ -1,6 +1,4 @@
-import { $ } from './utilities/utils.mjs';
-import { generateRandomArray } from './utilities/utils.mjs';
-import { produceErrorMessage } from './utilities/utils.mjs';
+import { $, generateRandomArray, produceErrorMessage, } from './utilities/utils.mjs';
 //clear button clears text inputs and array display
 function makeClearButton() {
     try {
@@ -33,7 +31,13 @@ const stringToArray = (str) => {
 function strArrayToLiElements(arr, existingLen) {
     return arr.map((elem, idx) => {
         const listElement = document.createElement('li');
+        listElement.id = 'el-' + idx;
         const arrayElementTag = document.createElement('p');
+        arrayElementTag.id = 'val-' + elem;
+        arrayElementTag.draggable = true;
+        arrayElementTag.addEventListener('drop', drop);
+        arrayElementTag.addEventListener('dragover', canDrop);
+        arrayElementTag.addEventListener('dragstart', drag);
         arrayElementTag.className += 'arr-element';
         const idxElem = document.createElement('p');
         arrayElementTag.textContent = elem;
@@ -215,12 +219,12 @@ function canDrop(event) {
 }
 function drag(event) {
     try {
-        const arrayVal = event.target.lastChild?.textContent;
+        const arrayElem = event.target.id;
         if (!event.dataTransfer || !event.target)
             throw new Error('no event to check');
-        if (!arrayVal)
+        if (!arrayElem)
             throw new Error('no array value');
-        event.dataTransfer.setData('text', arrayVal);
+        event.dataTransfer.setData('text', arrayElem);
     }
     catch (error) {
         produceErrorMessage(error);
@@ -229,13 +233,18 @@ function drag(event) {
 function drop(event) {
     try {
         event.preventDefault();
-        const data = event.dataTransfer?.getData('text');
+        let draggedElement = event.dataTransfer?.getData('text');
         const swap = event.target.lastChild;
-        if (!data)
-            throw new Error('no data found in list elem');
         if (!swap)
             throw new Error('no data to swap');
-        swap.textContent = data;
+        if (!draggedElement)
+            throw new Error('no data found in list elem');
+        let data = $(draggedElement);
+        if (!data)
+            throw new Error('no data found in list elem');
+        const dataVal = data.textContent;
+        data.textContent = swap.textContent;
+        swap.textContent = dataVal;
     }
     catch (error) {
         produceErrorMessage(error);
