@@ -66,9 +66,6 @@ function makeRandomButton() {
         arrList.appendChild(arrEl);
       });
     });
-    inputElement.addEventListener('keydown', (e) =>
-      inputKeyHandle(e, buttonRandom)
-    );
   } catch (error) {
     produceErrorMessage(error);
   }
@@ -90,7 +87,6 @@ function makeArrayButton(butId: string, inputId: string, outputId: string) {
         outputElement.appendChild(arrEl);
       });
     });
-    inputElement.addEventListener('keydown', (e) => inputKeyHandle(e, button));
   } catch (errorId: unknown) {
     produceErrorMessage(errorId);
   }
@@ -119,7 +115,6 @@ function makeConcatButton() {
       });
       inputElement.value = '';
     });
-    inputElement.addEventListener('keydown', (e) => inputKeyHandle(e, button));
   } catch (errorId: unknown) {
     produceErrorMessage(errorId);
   }
@@ -143,7 +138,6 @@ function pushToArrayList() {
       arrList.appendChild(newVal);
       inputElement.value = '';
     });
-    inputElement.addEventListener('keydown', (e) => inputKeyHandle(e, button));
   } catch (error) {
     produceErrorMessage(error);
   }
@@ -171,7 +165,6 @@ function unShiftToArrayList() {
       arrList.insertBefore(newVal, firstArrElem);
       inputElement.value = '';
     });
-    inputElement.addEventListener('keydown', (e) => inputKeyHandle(e, button));
   } catch (error) {
     produceErrorMessage(error);
   }
@@ -252,3 +245,6 @@ pushToArrayList();
 unShiftToArrayList();
 popArray();
 shiftArray();
+document.addEventListener('focus', () => {
+  document.addEventListener('keydown', (e) => inputKeyHandle(e));
+});

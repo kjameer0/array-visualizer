@@ -18,8 +18,32 @@ export function produceErrorMessage(err) {
     }
     reportError({ message });
 }
-export function inputKeyHandle(e, button) {
-    if (e.key === 'Enter') {
-        button.click();
+export function inputKeyHandle(e) {
+    if (/[a-z]/.test(e.key)) {
+        console.log(e.key);
+        e.preventDefault();
+    }
+    try {
+        let input = '';
+        if (e.key === 'm')
+            input = 'array-input';
+        else if (e.key === '1')
+            input = 'array-input';
+        else if (e.key === 'c')
+            input = 'array-input';
+        else if (e.key === 'p')
+            input = 'array-input';
+        else if (e.key === 'u')
+            input = 'array-input';
+        const element = $(input);
+        if (!element)
+            return;
+        element?.focus();
+        element.value = '';
+    }
+    catch (error) {
+        produceErrorMessage(error);
+    }
+    finally {
     }
 }
