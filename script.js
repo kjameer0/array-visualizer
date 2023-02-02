@@ -1,4 +1,4 @@
-import { $, generateRandomArray, produceErrorMessage, inputKeyHandle, } from './utilities/utils.mjs';
+import { $, generateRandomArray, produceErrorMessage, enterKeyDown, } from './utilities/utils.mjs';
 //clear button clears text inputs and array display
 function makeClearButton() {
     try {
@@ -64,6 +64,7 @@ function makeRandomButton() {
                 arrList.appendChild(arrEl);
             });
         });
+        inputElement.addEventListener('keydown', (e) => enterKeyDown(e, buttonRandom));
     }
     catch (error) {
         produceErrorMessage(error);
@@ -90,6 +91,7 @@ function makeArrayButton(butId, inputId, outputId) {
                 outputElement.appendChild(arrEl);
             });
         });
+        inputElement.addEventListener('keydown', (e) => enterKeyDown(e, button));
     }
     catch (errorId) {
         produceErrorMessage(errorId);
@@ -121,6 +123,7 @@ function makeConcatButton() {
             });
             inputElement.value = '';
         });
+        inputElement.addEventListener('keydown', (e) => enterKeyDown(e, button));
     }
     catch (errorId) {
         produceErrorMessage(errorId);
@@ -145,6 +148,7 @@ function pushToArrayList() {
             arrList.appendChild(newVal);
             inputElement.value = '';
         });
+        inputElement.addEventListener('keydown', (e) => enterKeyDown(e, button));
     }
     catch (error) {
         produceErrorMessage(error);
@@ -156,7 +160,7 @@ function unShiftToArrayList() {
         const inputElement = $('unshift-input');
         const arrList = $('array-list');
         if (!(button && inputElement && arrList))
-            throw new Error(`missing element in push function`);
+            throw new Error(`missing element in unshift function`);
         button.addEventListener('click', () => {
             const firstArrElem = arrList.firstChild;
             if (firstArrElem === null)
@@ -175,6 +179,7 @@ function unShiftToArrayList() {
             arrList.insertBefore(newVal, firstArrElem);
             inputElement.value = '';
         });
+        inputElement.addEventListener('keydown', (e) => enterKeyDown(e, button));
     }
     catch (error) {
         produceErrorMessage(error);
@@ -265,6 +270,3 @@ pushToArrayList();
 unShiftToArrayList();
 popArray();
 shiftArray();
-document.addEventListener('focus', () => {
-    document.addEventListener('keydown', (e) => inputKeyHandle(e));
-});

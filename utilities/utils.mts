@@ -19,6 +19,16 @@ export function produceErrorMessage(err: unknown) {
   reportError({ message });
 }
 
+export function enterKeyDown(e: KeyboardEvent, button: HTMLElement) {
+  try {
+    if (!button) throw new Error('no button');
+    if (e.key === 'Enter') {
+      button.click();
+    }
+  } catch (error) {
+    produceErrorMessage;
+  }
+}
 export function inputKeyHandle(e: KeyboardEvent) {
   if (/[a-z]/.test(e.key)) {
     console.log(e.key);

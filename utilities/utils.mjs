@@ -18,6 +18,18 @@ export function produceErrorMessage(err) {
     }
     reportError({ message });
 }
+export function enterKeyDown(e, button) {
+    try {
+        if (!button)
+            throw new Error('no button');
+        if (e.key === 'Enter') {
+            button.click();
+        }
+    }
+    catch (error) {
+        produceErrorMessage;
+    }
+}
 export function inputKeyHandle(e) {
     if (/[a-z]/.test(e.key)) {
         console.log(e.key);

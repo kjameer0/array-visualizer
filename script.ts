@@ -3,6 +3,7 @@ import {
   generateRandomArray,
   produceErrorMessage,
   inputKeyHandle,
+  enterKeyDown,
 } from './utilities/utils.mjs';
 //clear button clears text inputs and array display
 function makeClearButton() {
@@ -66,6 +67,9 @@ function makeRandomButton() {
         arrList.appendChild(arrEl);
       });
     });
+    inputElement.addEventListener('keydown', (e) =>
+      enterKeyDown(e, buttonRandom)
+    );
   } catch (error) {
     produceErrorMessage(error);
   }
@@ -87,6 +91,7 @@ function makeArrayButton(butId: string, inputId: string, outputId: string) {
         outputElement.appendChild(arrEl);
       });
     });
+    inputElement.addEventListener('keydown', (e) => enterKeyDown(e, button));
   } catch (errorId: unknown) {
     produceErrorMessage(errorId);
   }
@@ -115,6 +120,7 @@ function makeConcatButton() {
       });
       inputElement.value = '';
     });
+    inputElement.addEventListener('keydown', (e) => enterKeyDown(e, button));
   } catch (errorId: unknown) {
     produceErrorMessage(errorId);
   }
@@ -138,6 +144,7 @@ function pushToArrayList() {
       arrList.appendChild(newVal);
       inputElement.value = '';
     });
+    inputElement.addEventListener('keydown', (e) => enterKeyDown(e, button));
   } catch (error) {
     produceErrorMessage(error);
   }
@@ -148,7 +155,7 @@ function unShiftToArrayList() {
     const inputElement = $('unshift-input') as HTMLInputElement;
     const arrList = $('array-list');
     if (!(button && inputElement && arrList))
-      throw new Error(`missing element in push function`);
+      throw new Error(`missing element in unshift function`);
     button.addEventListener('click', () => {
       const firstArrElem = arrList.firstChild;
       if (firstArrElem === null) throw new Error('no existing arr');
@@ -165,6 +172,7 @@ function unShiftToArrayList() {
       arrList.insertBefore(newVal, firstArrElem);
       inputElement.value = '';
     });
+    inputElement.addEventListener('keydown', (e) => enterKeyDown(e, button));
   } catch (error) {
     produceErrorMessage(error);
   }
@@ -245,6 +253,3 @@ pushToArrayList();
 unShiftToArrayList();
 popArray();
 shiftArray();
-document.addEventListener('focus', () => {
-  document.addEventListener('keydown', (e) => inputKeyHandle(e));
-});
