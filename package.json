@@ -1,14 +1,15 @@
 {
-  "name": "binary-tree-visualizer",
+  "name": "array-visualizer",
   "version": "1.0.0",
   "description": "Initial attempt at creating a data-structure visualizer using TypeScript, HTML, and CSS. The first step is to create an array visualizer that allows the following:",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kjameer0/binary-tree-visualizer.git"
+    "url": "git+https://github.com/kjameer0/array-visualizer.git"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,9 @@
     "url": "https://github.com/kjameer0/binary-tree-visualizer/issues"
   },
   "homepage": "https://github.com/kjameer0/binary-tree-visualizer#readme",
+  "dependencies": {
+    "vite-plugin-svgr": "2.4.0"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
@@ -24,6 +28,8 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-react": "^7.32.1",
     "prettier": "^2.8.3",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4",
+    "vite-tsconfig-paths": "^4.0.3"
   }
 }
